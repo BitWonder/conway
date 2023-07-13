@@ -50,14 +50,15 @@ impl Game {
                 else if x == self.cells.len() as isize { tx = 0 }
                 if y < 0 { ty = (self.cells.len() - 1) as isize }
                 else if y == self.cells.len() as isize { ty = 0 }
-                if (tx != position_x) && (ty != position_y) {
-                    match self.cells[tx as usize][ty as usize] {
-                        State::Alive => {
-                            count += 1;
-                        }
-                        _ => {
-                            continue;
-                        }
+                if (tx == position_x) && (ty == position_y) {
+                    continue;
+                }
+                match self.cells[tx as usize][ty as usize] {
+                    State::Alive => {
+                        count += 1;
+                    }
+                    _ => {
+                        continue;
                     }
                 }
             }
