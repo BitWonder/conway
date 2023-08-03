@@ -81,9 +81,9 @@ impl Game {
      */
     pub fn print_game(&self) {
         clear_screen();
-        for x in 0..self.cells.len() {
-            for y in 0..self.cells[x].len() {
-                match self.cells[y][x] {
+        for row in &self.cells {
+            for cell in row {
+                match cell {
                     State::Alive => { print!( "#" ) }
                     _ => { print!( "." ) }
                 }
