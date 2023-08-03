@@ -1,4 +1,6 @@
 use std::{io::{self, Write}, thread, time::Duration};
+// for keyboard
+use device_query::{DeviceQuery, DeviceState, Keycode};
 
 #[derive(Debug)]
 
@@ -161,9 +163,17 @@ fn main() {
     game.cells[3][36] = State::Alive;
     game.cells[4][35] = State::Alive;
     game.cells[4][36] = State::Alive;
+    let device_state = DeviceState::new();
     'game_loop : loop {
         game.print_game();
         game.step();
         thread::sleep(Duration::from_millis(5));
+        let keys: Vec<Keycode> = device_state.get_keys();
+        // if q is pressed then quit program
+        for key in keys.iter() {
+            if key == &Keycode::Q {
+                break 'game_loop;
+            }
+        }
     }
 }
