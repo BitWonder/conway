@@ -1,3 +1,5 @@
+use std::io::{self, Write};
+
 #[derive(Debug)]
 struct Game {
     cells : Vec<Vec<State>>
@@ -65,6 +67,20 @@ impl Game {
         }
         return count;
     }
+
+    pub fn print_game(&self) {
+        for x in 0..self.cells.len() {
+            for y in 0..self.cells[x].len() {
+                match self.cells[y][x] {
+                    State::Alive => { print!( "#" ) }
+                    _ => { print!( "." ) }
+                }
+            }
+            print!("\n");
+            io::stdout().flush().unwrap();
+        }
+        println!("\n \n \n");
+    }
 }
 
 #[derive(PartialEq, Clone, Debug)]
@@ -75,14 +91,11 @@ enum State {
 
 fn main() {
     let mut game = Game::new( 5 );
-    let mut steps = 0;
     game.cells[0][1] = State::Alive;
     game.cells[1][1] = State::Alive;
     game.cells[2][1] = State::Alive;
     'game_loop : loop {
-        if steps > 2 { break 'game_loop; }
-        println!("{:?} \n \n \n", game);
+        game.print_game();
         game = game.step();
-        steps += 1;
     }
 }
